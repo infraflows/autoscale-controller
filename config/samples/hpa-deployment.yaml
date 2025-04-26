@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-deployment
+  namespace: default
+  annotations:
+    hpa.infraflow.co/minReplicas: "2"    # 最小副本数
+    hpa.infraflow.co/maxReplicas: "10"   # 最大副本数
+
+    cpu.hpa.infraflow.co/targetAverageUtilization: "70"    # CPU使用率指标 (70%)
+    memory.hpa.infraflow.co/targetAverageUtilization: "75" # Memory使用率指标 (75%)
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: example
+  template:
+    metadata:
+      labels:
+        app: example
+    spec:
+      containers:
+      - name: app
+        image: nginx
+        resources:
+          requests:
+            cpu: 200m
+            memory: 256Mi

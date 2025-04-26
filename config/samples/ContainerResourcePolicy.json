@@ -1,0 +1,29 @@
+[
+    {
+      "containerName": "app",
+      "minAllowed": {
+        "cpu": "300m",
+        "memory": "512Mi"
+      },
+      "maxAllowed": {
+        "cpu": "1",
+        "memory": "2Gi"
+      },
+      "controlledResources": [
+        "cpu",
+        "memory"
+      ]
+    },
+    {
+      "containerName": "sidecar",
+      "minAllowed": {
+        "cpu": "100m",
+        "memory": "128Mi"
+      },
+      "maxAllowed": {
+        "cpu": "500m",
+        "memory": "1Gi"
+      }
+    }
+  ]
+  

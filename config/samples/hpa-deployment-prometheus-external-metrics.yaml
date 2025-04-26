@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-deployment
+  namespace: default
+  annotations:
+    hpa.infraflow.co/minReplicas: "1"
+    hpa.infraflow.co/maxReplicas: "20"
+
+    prometheus.hpa.infraflow.co/metricName: "http_requests_total"
+    prometheus.hpa.infraflow.co/targetAverageValue: "100"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: example
+  template:
+    metadata:
+      labels:
+        app: example
+    spec:
+      containers:
+      - name: app
+        image: nginx

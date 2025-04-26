@@ -1,0 +1,22 @@
+{
+    "containerPolicies": [
+      {
+        "containerName": "*",
+        "minAllowed": {
+          "cpu": "200m",
+          "memory": "256Mi"
+        },
+        "maxAllowed": {
+          "cpu": "2",
+          "memory": "4Gi"
+        },
+        "controlledResources": [
+          "cpu",
+          "memory"
+        ],
+        "controlledValues": "RequestsAndLimits",
+        "mode": "Auto"
+      }
+    ]
+  }
+  

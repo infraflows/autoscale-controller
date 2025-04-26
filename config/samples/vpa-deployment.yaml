@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-deployment
+  namespace: default
+  annotations:
+    vpa.infraflow.co/updateMode: "Auto" # VPA 模式，可选 Auto / Initial / Off
+
+    cpu.vpa.infraflow.co/minAllowed: "200m"  # 最小 CPU
+    cpu.vpa.infraflow.co/maxAllowed: "2"     # 最大 CPU
+    memory.vpa.infraflow.co/minAllowed: "256Mi"
+    memory.vpa.infraflow.co/maxAllowed: "4Gi"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: example
+  template:
+    metadata:
+      labels:
+        app: example
+    spec:
+      containers:
+      - name: app
+        image: nginx
+        resources:
+          requests:
+            cpu: 500m
+            memory: 512Mi
