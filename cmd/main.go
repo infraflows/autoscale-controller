@@ -142,12 +142,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controller.AutoScalerReconciler{
+	if err = (&controller.AutoScaleReconciler{
 		Client: mgr.GetClient(),
 		Scheme: mgr.GetScheme(),
-		Event:  mgr.GetEventRecorderFor("AutoScaler"),
+		Event:  mgr.GetEventRecorderFor("AutoScale"),
 	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "AutoScaler")
+		setupLog.Error(err, "unable to create controller", "controller", "AutoScale")
 		os.Exit(1)
 	}
 	// +kubebuilder:scaffold:builder

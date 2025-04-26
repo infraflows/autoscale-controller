@@ -1,6 +1,6 @@
-# Infraflow Autoscaler Annotations 说明文档
+# Infraflow Autoscale Annotations 说明文档
 
-Infraflow Autoscaler Operator 通过读取资源对象（Deployment、StatefulSet、DaemonSet）的 Annotations，动态管理 HPA（HorizontalPodAutoscaler）和 VPA（VerticalPodAutoscaler）配置。只需在资源对象的 Metadata 中添加特定 Annotation，即可启用或定制自动扩缩容策略。
+Infraflow Autoscale Operator 通过读取资源对象（Deployment、StatefulSet、DaemonSet）的 Annotations，动态管理 HPA（HorizontalPodAutoscaler）和 VPA（VerticalPodAutoscaler）配置。只需在资源对象的 Metadata 中添加特定 Annotation，即可启用或定制自动扩缩容策略。
 
 ## HPA（水平自动扩缩容）相关 Annotations
 
@@ -46,7 +46,7 @@ Infraflow Autoscaler Operator 自动为管理的 Workload 增加以下 Finalizer
 
 | Finalizer | 描述 |
 |-----------|------|
-| `finalizers.infraflow.co/autoscaler` | 确保 Workload 删除时自动清理对应的 HPA 和 VPA，避免资源悬挂 | 
+| `finalizers.infraflow.co/autoscale` | 确保 Workload 删除时自动清理对应的 HPA 和 VPA，避免资源悬挂 | 
 
 ## 补充说明
  + 所有 Annotation 的值都必须是字符串格式。

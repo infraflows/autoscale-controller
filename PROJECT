@@ -8,12 +8,12 @@ layout:
 plugins:
   manifests.sdk.operatorframework.io/v2: {}
   scorecard.sdk.operatorframework.io/v2: {}
-projectName: infraflow-autoscaler-controller
+projectName: infraflow-autoscale-controller
 repo: github.com/infraflows/autoscale-controller
 resources:
 - controller: true
   domain: infraflow.co
-  group: autoscaler
-  kind: AutoScaler
+  group: autoscale
+  kind: AutoScale
   version: v1
 version: "3"

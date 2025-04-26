@@ -31,7 +31,7 @@ func ValidateUpdateMode(mode string) error {
 	}
 }
 
-// BuildDesiredVPA 根据工作负载的注解构建期望的Vertical Pod Autoscaler配置
+// BuildDesiredVPA 根据工作负载的注解构建期望的Vertical Pod Autoscale配置
 // 支持的注解：
 // - vpa.infraflow.co/update-mode: 更新模式（Auto/Initial/Off）
 // - vpa.infraflow.co/resource-policy: 资源策略（JSON格式）

@@ -8,7 +8,7 @@ import (
 var (
 	ReconcileTotal = prometheus.NewCounterVec(
 		prometheus.CounterOpts{
-			Name: "infraflow_autoscaler_reconcile_total",
+			Name: "infraflow_autoscale_reconcile_total",
 			Help: "Total number of reconciliations",
 		},
 		[]string{"kind"},

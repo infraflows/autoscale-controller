@@ -20,7 +20,7 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 )
 
-var _ = Describe("AutoScaler Controller", func() {
+var _ = Describe("AutoScale Controller", func() {
 	Context("When reconciling a resource", func() {
 
 		It("should successfully reconcile the resource", func() {

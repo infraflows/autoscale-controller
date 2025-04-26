@@ -1,4 +1,4 @@
 ## Append samples you want in your CSV to this file as resources ##
 resources:
-- autoscaler_v1_autoscaler.yaml
+- autoscale_v1_autoscale.yaml
 # +kubebuilder:scaffold:manifestskustomizesamples

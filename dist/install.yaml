@@ -3,17 +3,17 @@ kind: Namespace
 metadata:
   labels:
     app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: infraflow-autoscaler-controller
+    app.kubernetes.io/name: infraflow-autoscale-controller
     control-plane: controller-manager
-  name: infraflow-autoscaler-controller-system
+  name: infraflow-autoscale-controller-system
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   labels:
     app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: infraflow-autoscaler-controller
-  name: infraflow-autoscaler-controller-manager
+    app.kubernetes.io/name: infraflow-autoscale-controller
+  name: infraflow-autoscale-controller-manager
   namespace: autoscale-controller-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -21,8 +21,8 @@ kind: Role
 metadata:
   labels:
     app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: infraflow-autoscaler-controller
-  name: infraflow-autoscaler-leader-election-role
+    app.kubernetes.io/name: infraflow-autoscale-controller
+  name: infraflow-autoscale-leader-election-role
   namespace: autoscale-controller-system
 rules:
 - apiGroups:
@@ -62,8 +62,8 @@ kind: ClusterRole
 metadata:
   labels:
     app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: infraflow-autoscaler-controller
-  name: infraflow-autoscaler-manager-role
+    app.kubernetes.io/name: infraflow-autoscale-controller
+  name: infraflow-autoscale-manager-role
 rules:
 - apiGroups:
   - ""
@@ -77,7 +77,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: infraflow-autoscaler-metrics-auth-role
+  name: infraflow-autoscale-metrics-auth-role
 rules:
 - apiGroups:
   - authentication.k8s.io
@@ -95,7 +95,7 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: infraflow-autoscaler-metrics-reader
+  name: infraflow-autoscale-metrics-reader
 rules:
 - nonResourceURLs:
   - /metrics
@@ -107,13 +107,13 @@ kind: RoleBinding
 metadata:
   labels:
     app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: infraflow-autoscaler-controller
-  name: infraflow-autoscaler-leader-election-rolebinding
+    app.kubernetes.io/name: infraflow-autoscale-controller
+  name: infraflow-autoscale-leader-election-rolebinding
   namespace: autoscale-controller-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: infraflow-autoscaler-leader-election-role
+  name: infraflow-autoscale-leader-election-role
 subjects:
 - kind: ServiceAccount
   name: autoscale-controller-manager
@@ -124,12 +124,12 @@ kind: ClusterRoleBinding
 metadata:
   labels:
     app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: infraflow-autoscaler-controller
-  name: infraflow-autoscaler-manager-rolebinding
+    app.kubernetes.io/name: infraflow-autoscale-controller
+  name: infraflow-autoscale-manager-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: infraflow-autoscaler-manager-role
+  name: infraflow-autoscale-manager-role
 subjects:
 - kind: ServiceAccount
   name: autoscale-controller-manager
@@ -138,11 +138,11 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: infraflow-autoscaler-metrics-auth-rolebinding
+  name: infraflow-autoscale-metrics-auth-rolebinding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: infraflow-autoscaler-metrics-auth-role
+  name: infraflow-autoscale-metrics-auth-role
 subjects:
 - kind: ServiceAccount
   name: autoscale-controller-manager
@@ -153,9 +153,9 @@ kind: Service
 metadata:
   labels:
     app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: infraflow-autoscaler-controller
+    app.kubernetes.io/name: infraflow-autoscale-controller
     control-plane: controller-manager
-  name: infraflow-autoscaler-controller-manager-metrics-service
+  name: infraflow-autoscale-controller-manager-metrics-service
   namespace: autoscale-controller-system
 spec:
   ports:
@@ -171,9 +171,9 @@ kind: Deployment
 metadata:
   labels:
     app.kubernetes.io/managed-by: kustomize
-    app.kubernetes.io/name: infraflow-autoscaler-controller
+    app.kubernetes.io/name: infraflow-autoscale-controller
     control-plane: controller-manager
-  name: infraflow-autoscaler-controller-manager
+  name: infraflow-autoscale-controller-manager
   namespace: autoscale-controller-system
 spec:
   replicas: 1

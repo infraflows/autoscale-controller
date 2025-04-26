@@ -11,7 +11,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
-// BuildDesiredHPA 根据工作负载的注解构建期望的Horizontal Pod Autoscaler配置
+// BuildDesiredHPA 根据工作负载的注解构建期望的Horizontal Pod autoscale配置
 // 支持的注解：
 // - hpa.infraflow.co/min-replicas: 最小副本数
 // - hpa.infraflow.co/max-replicas: 最大副本数

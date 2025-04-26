@@ -20,7 +20,7 @@ Autoscale Controller 简化了扩缩容策略的配置流程，并通过自动�
 ### 安装
 
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/infraflows/autoscaler-controller/main/dist/install.yaml
+kubectl apply -f https://raw.githubusercontent.com/infraflows/autoscale-controller/main/dist/install.yaml
 ```
 
 ### 配置示例

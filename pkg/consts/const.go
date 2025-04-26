@@ -64,5 +64,4 @@ const VPAAnnotationResourcePolicy = vpaPrefix + "resourcePolicy"
 // Value: string (JSON-encoded container policies).
 const VPAAnnotationContainerPolicy = vpaPrefix + "containerPolicies"
 
-
-const AutoScalerFinalizer = "finalizers.infraflow.co/autoscaler"
+const AutoScaleFinalizer = "finalizers.infraflow.co/autoscale"

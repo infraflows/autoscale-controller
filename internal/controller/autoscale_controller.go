@@ -17,7 +17,7 @@ limitations under the License.
 package controller
 
 import (
-	context "context"
+	"context"
 	"strings"
 
 	"github.com/infraflows/autoscale-controller/pkg/consts"
@@ -36,7 +36,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/log"
 )
 
-type AutoScalerReconciler struct {
+type AutoScaleReconciler struct {
 	client.Client
 	Scheme *runtime.Scheme
 	Event  record.EventRecorder
@@ -46,7 +46,7 @@ func init() {
 	metrics.Init()
 }
 
-func (r *AutoScalerReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
+func (r *AutoScaleReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	logger := log.FromContext(ctx)
 	logger.Info("Reconciling workload", "namespace", req.Namespace, "name", req.Name)
 
@@ -76,16 +76,16 @@ func (r *AutoScalerReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 
 	if workload.GetDeletionTimestamp() != nil {
 		// 如果删除中，执行清理逻辑
-		if controllerutil.ContainsFinalizer(workload, consts.AutoScalerFinalizer) {
+		if controllerutil.ContainsFinalizer(workload, consts.AutoScaleFinalizer) {
 			_ = r.deleteHPA(ctx, workload)
 			_ = r.deleteVPA(ctx, workload)
-			controllerutil.RemoveFinalizer(workload, consts.AutoScalerFinalizer)
+			controllerutil.RemoveFinalizer(workload, consts.AutoScaleFinalizer)
 			return ctrl.Result{}, r.Update(ctx, workload)
 		}
 		return ctrl.Result{}, nil
 	}
-	if !controllerutil.ContainsFinalizer(workload, consts.AutoScalerFinalizer) {
-		controllerutil.AddFinalizer(workload, consts.AutoScalerFinalizer)
+	if !controllerutil.ContainsFinalizer(workload, consts.AutoScaleFinalizer) {
+		controllerutil.AddFinalizer(workload, consts.AutoScaleFinalizer)
 		_ = r.Update(ctx, workload)
 	}
 
@@ -117,11 +117,11 @@ func (r *AutoScalerReconciler) Reconcile(ctx context.Context, req ctrl.Request) 
 	return ctrl.Result{}, nil
 }
 
-// reconcileHPA 协调Horizontal Pod Autoscaler
+// reconcileHPA 协调Horizontal Pod Autoscale
 // 1. 构建期望的HPA配置
 // 2. 检查现有HPA是否存在
 // 3. 创建新的HPA或更新现有的HPA
-func (r *AutoScalerReconciler) reconcileHPA(ctx context.Context, workload client.Object, kind string) error {
+func (r *AutoScaleReconciler) reconcileHPA(ctx context.Context, workload client.Object, kind string) error {
 	desired := kube.BuildDesiredHPA(workload, kind)
 	current := &autoscalingv2.HorizontalPodAutoscaler{}
 	err := r.Get(ctx, client.ObjectKeyFromObject(desired), current)
@@ -140,7 +140,7 @@ func (r *AutoScalerReconciler) reconcileHPA(ctx context.Context, workload client
 }
 
 // deleteHPA 删除与工作负载关联的HPA
-func (r *AutoScalerReconciler) deleteHPA(ctx context.Context, workload client.Object) error {
+func (r *AutoScaleReconciler) deleteHPA(ctx context.Context, workload client.Object) error {
 	hpa := &autoscalingv2.HorizontalPodAutoscaler{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      workload.GetName(),
@@ -154,7 +154,7 @@ func (r *AutoScalerReconciler) deleteHPA(ctx context.Context, workload client.Ob
 // 1. 构建期望的VPA配置
 // 2. 检查现有VPA是否存在
 // 3. 创建新的VPA或更新现有的VPA
-func (r *AutoScalerReconciler) reconcileVPA(ctx context.Context, workload client.Object, kind string) error {
+func (r *AutoScaleReconciler) reconcileVPA(ctx context.Context, workload client.Object, kind string) error {
 	desired, err := kube.BuildDesiredVPA(workload, kind)
 	if err != nil {
 		return err
@@ -176,7 +176,7 @@ func (r *AutoScalerReconciler) reconcileVPA(ctx context.Context, workload client
 }
 
 // deleteVPA 删除与工作负载关联的VPA
-func (r *AutoScalerReconciler) deleteVPA(ctx context.Context, workload client.Object) error {
+func (r *AutoScaleReconciler) deleteVPA(ctx context.Context, workload client.Object) error {
 	vpa := &autoscalingv1beta2.VerticalPodAutoscaler{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      workload.GetName(),
@@ -190,7 +190,7 @@ func (r *AutoScalerReconciler) deleteVPA(ctx context.Context, workload client.Ob
 // 支持的注解前缀：
 // - cpu.hpa.infraflow.co/
 // - memory.hpa.infraflow.co/
-func (r *AutoScalerReconciler) shouldManageHPA(annotations map[string]string) bool {
+func (r *AutoScaleReconciler) shouldManageHPA(annotations map[string]string) bool {
 	for key := range annotations {
 		if strings.HasPrefix(key, "cpu.hpa.infraflow.co/") || strings.HasPrefix(key, "memory.hpa.infraflow.co/") {
 			return true
@@ -204,7 +204,7 @@ func (r *AutoScalerReconciler) shouldManageHPA(annotations map[string]string) bo
 // - cpu.vpa.infraflow.co/
 // - memory.vpa.infraflow.co/
 // - vpa.infraflow.co/
-func (r *AutoScalerReconciler) shouldManageVPA(annotations map[string]string) bool {
+func (r *AutoScaleReconciler) shouldManageVPA(annotations map[string]string) bool {
 	for key := range annotations {
 		if strings.HasPrefix(key, "cpu.vpa.infraflow.co/") || strings.HasPrefix(key, "memory.vpa.infraflow.co/") || strings.HasPrefix(key, "vpa.infraflow.co/") {
 			return true
@@ -213,7 +213,7 @@ func (r *AutoScalerReconciler) shouldManageVPA(annotations map[string]string) bo
 	return false
 }
 
-func (r *AutoScalerReconciler) SetupWithManager(mgr ctrl.Manager) error {
+func (r *AutoScaleReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&appsv1.Deployment{}).
 		For(&appsv1.StatefulSet{}).
