@@ -80,4 +80,4 @@ spec:
 This project is licensed under the terms of the [Apache License 2.0](LICENSE)
 
 ## ✨ 贡献
-欢迎提交问题和功能请求！请查看 [CONTRIBUTING.md](CONTRIBUTING.md) 了解更多信息。
+欢迎提交问题和功能请求！请查看 [CONTRIBUTING](CONTRIBUTING.md) 了解更多信息。
