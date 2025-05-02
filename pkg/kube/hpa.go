@@ -35,13 +35,13 @@ func BuildDesiredHPA(workload client.Object, kind string) *autoscalingv2.Horizon
 		},
 	}
 
-	if val, ok := annotations[consts.HPACpuMinReplicas]; ok {
+	if val, ok := annotations[consts.HPAMinReplicas]; ok {
 		if v, err := strconv.Atoi(val); err == nil {
 			min := int32(v)
 			hpa.Spec.MinReplicas = &min
 		}
 	}
-	if val, ok := annotations[consts.HPACpuMaxReplicas]; ok {
+	if val, ok := annotations[consts.HPAMaxReplicas]; ok {
 		if v, err := strconv.Atoi(val); err == nil {
 			hpa.Spec.MaxReplicas = int32(v)
 		}

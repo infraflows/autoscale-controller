@@ -7,8 +7,8 @@ metadata:
     hpa.infraflow.co/minReplicas: "2"    # 最小副本数
     hpa.infraflow.co/maxReplicas: "10"   # 最大副本数
 
-    cpu.hpa.infraflow.co/targetAverageUtilization: "70"    # CPU使用率指标 (70%)
-    memory.hpa.infraflow.co/targetAverageUtilization: "75" # Memory使用率指标 (75%)
+    hpa.infraflow.co/cpu.targetAverageUtilization: "75" # CPU使用率指标 (75%)
+    hpa.infraflow.co/memory.targetAverageUtilization: "75" # Memory使用率指标 (75%)
 spec:
   replicas: 2
   selector:

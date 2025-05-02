@@ -7,7 +7,7 @@ Autoscale Controller 简化了扩缩容策略的配置流程，并通过自动�
 
 
 ## ✨ 功能特性
-
+> Tips：VPA目前处于实验阶段，不建议在生产环境中使用
 - 支持自动创建和管理HPA和VPA
 - 支持通过注解配置HPA和VPA参数
 - 支持多种工作负载类型（Deployment、StatefulSet、DaemonSet）
@@ -33,10 +33,10 @@ kind: Deployment
 metadata:
   name: example
   annotations:
-    hpa.infraflow.co/min-replicas: "1"
-    hpa.infraflow.co/max-replicas: "10"
-    cpu.hpa.infraflow.co/target-average-utilization: "80"
-    memory.hpa.infraflow.co/target-average-utilization: "70"
+    hpa.infraflow.co/minReplicas: "2"
+    hpa.infraflow.co/maxReplicas: "10"
+    hpa.infraflow.co/cpu.targetAverageUtilization: "80"
+    hpa.infraflow.co/memory.targetAverageUtilization: "70"
 spec:
   # ... 其他配置 ...
 ```
@@ -49,8 +49,8 @@ kind: Deployment
 metadata:
   name: example
   annotations:
-    vpa.infraflow.co/update-mode: "Auto"
-    vpa.infraflow.co/resource-policy: |
+    vpa.infraflow.co/updateMode: "Auto"
+    vpa.infraflow.co/resourcePolicy: |
       {
         "containerPolicies": [
           {

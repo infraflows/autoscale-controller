@@ -6,6 +6,8 @@ metadata:
   annotations:
     hpa.infraflow.co/minReplicas: "1"
     hpa.infraflow.co/maxReplicas: "20"
+    hpa.infraflow.co/cpu.targetAverageUtilization: "80"
+    hpa.infraflow.co/memory.targetAverageUtilization: "70"
 
     prometheus.hpa.infraflow.co/metricName: "http_requests_total"
     prometheus.hpa.infraflow.co/targetAverageValue: "100"
