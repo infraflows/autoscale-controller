@@ -35,37 +35,37 @@ func BuildDesiredHPA(workload client.Object, kind string) *autoscalingv2.Horizon
 		},
 	}
 
-	if val, ok := annotations[consts.HPAAnnotationMinReplicas]; ok {
+	if val, ok := annotations[consts.HPACpuMinReplicas]; ok {
 		if v, err := strconv.Atoi(val); err == nil {
 			min := int32(v)
 			hpa.Spec.MinReplicas = &min
 		}
 	}
-	if val, ok := annotations[consts.HPAAnnotationMaxReplicas]; ok {
+	if val, ok := annotations[consts.HPACpuMaxReplicas]; ok {
 		if v, err := strconv.Atoi(val); err == nil {
 			hpa.Spec.MaxReplicas = int32(v)
 		}
 	}
 
 	metrics := []autoscalingv2.MetricSpec{}
-	if val, ok := annotations[consts.CPUHPAAnnotationTargetAverageUtilization]; ok {
+	if val, ok := annotations[consts.HPACpuTargetAverageUtilization]; ok {
 		if target, err := strconv.Atoi(val); err == nil {
 			t := int32(target)
 			metrics = append(metrics, CPUUtilizationMetric(t))
 		}
 	}
-	if val, ok := annotations[consts.CPUHPAAnnotationTargetAverageValue]; ok {
+	if val, ok := annotations[consts.HPACpuTargetAverageValue]; ok {
 		if quantity, err := resource.ParseQuantity(val); err == nil {
 			metrics = append(metrics, CPUValueMetric(quantity))
 		}
 	}
-	if val, ok := annotations[consts.MemoryHPAAnnotationTargetAverageUtilization]; ok {
+	if val, ok := annotations[consts.HPAMemoryTargetAverageUtilization]; ok {
 		if target, err := strconv.Atoi(val); err == nil {
 			t := int32(target)
 			metrics = append(metrics, MemoryUtilizationMetric(t))
 		}
 	}
-	if val, ok := annotations[consts.MemoryHPAAnnotationTargetAverageValue]; ok {
+	if val, ok := annotations[consts.HPAMemoryTargetAverageValue]; ok {
 		if quantity, err := resource.ParseQuantity(val); err == nil {
 			metrics = append(metrics, MemoryValueMetric(quantity))
 		}

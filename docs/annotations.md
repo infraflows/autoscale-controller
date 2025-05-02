@@ -6,12 +6,12 @@ Infraflow Autoscale Operator 通过读取资源对象（Deployment、StatefulSet
 
 | Annotation Key | 类型 | 示例值 | 描述 |
 |----------------|------|--------|------|
-| `hpa.infraflow.co/minReplicas` | string | "2" | 最小副本数 |
-| `hpa.infraflow.co/maxReplicas` | string | "10" | 最大副本数 |
-| `cpu.hpa.infraflow.co/targetAverageUtilization` | string | "70" | CPU 使用率目标（百分比 %） |
-| `cpu.hpa.infraflow.co/targetAverageValue` | string | "500m" | CPU 使用量目标（核数） |
-| `memory.hpa.infraflow.co/targetAverageUtilization` | string | "75" | 内存使用率目标（百分比 %） |
-| `memory.hpa.infraflow.co/targetAverageValue` | string | "512Mi" | 内存使用量目标（字节数） |
+| `hpa.infraflow.co/cpu.minReplicas` | string | "2" | 最小副本数 |
+| `hpa.infraflow.co/cpu.maxReplicas` | string | "10" | 最大副本数 |
+| `hpa.infraflow.co/cpu.targetAverageUtilization` | string | "70" | CPU 使用率目标（百分比 %） |
+| `hpa.infraflow.co/cpu.targetAverageValue` | string | "500m" | CPU 使用量目标（核数） |
+| `hpa.infraflow.co/memory.targetAverageUtilization` | string | "75" | 内存使用率目标（百分比 %） |
+| `hpa.infraflow.co/memory.targetAverageValue` | string | "512Mi" | 内存使用量目标（字节数） |
 
 ## External Metrics（Prometheus 自定义指标）相关 Annotations
 
@@ -23,16 +23,17 @@ Infraflow Autoscale Operator 通过读取资源对象（Deployment、StatefulSet
 > 说明：使用 External Metrics 时，需搭配 Prometheus Adapter，并确保相关 Metric 已注册到 Kubernetes Metrics API。
 
 ## VPA（垂直自动扩缩容）相关 Annotations
+> 注意：VPA 目前处于实验阶段，不建议在生产环境中使用。
 
 | Annotation Key | 类型 | 示例值 | 描述 |
 |----------------|------|--------|------|
-| `vpa.infraflow.co/updateMode` | string | "Auto" , "Initial" , "Off" | VPA 更新模式。Auto 表示自动调整，Initial 表示仅初始化时设置，Off 禁用更新 |
-| `cpu.vpa.infraflow.co/minAllowed` | string | "200m" | 容器允许的最小 CPU 资源限制 |
-| `cpu.vpa.infraflow.co/maxAllowed` | string | "2" | 容器允许的最大 CPU 资源限制 |
-| `memory.vpa.infraflow.co/minAllowed` | string | "256Mi" | 容器允许的最小内存资源限制 |
-| `memory.vpa.infraflow.co/maxAllowed` | string | "4Gi" | 容器允许的最大内存资源限制 |
-| `vpa.infraflow.co/resourcePolicy`	| map[string]string | `{ "containerPolicies": [...] }`|	PodResourcePolicy 配置，详细控制各容器的扩缩规则|
-| `vpa.infraflow.co/containerPolicies` |	map[string]string |	`[{ "containerName": "app", "minAllowed": {"cpu": "200m"} }]` | ContainerResourcePolicy 列表，独立配置单个容器的资源策略|
+| `vpa.infraflow.co/mode` | string | "Auto" , "Initial" , "Off" | VPA 更新模式。Auto 表示自动调整，Initial 表示仅初始化时设置，Off 禁用更新 |
+| `vpa.infraflow.co/cpu.minAllowed` | string | "200m" | 容器允许的最小 CPU 资源限制 |
+| `vpa.infraflow.co/cpu.maxAllowed` | string | "2" | 容器允许的最大 CPU 资源限制 |
+| `vpa.infraflow.co/memory.minAllowed` | string | "256Mi" | 容器允许的最小内存资源限制 |
+| `vpa.infraflow.co/memory.maxAllowed` | string | "4Gi" | 容器允许的最大内存资源限制 |
+| `vpa.infraflow.co/resourcePolicy`	| string | `{ "containerPolicies": [...] }`|	PodResourcePolicy 配置，详细控制各容器的扩缩规则|
+| `vpa.infraflow.co/containerPolicies` |	string |	`[{ "containerName": "app", "minAllowed": {"cpu": "200m"} }]` | ContainerResourcePolicy 列表，独立配置单个容器的资源策略|
 
 >说明：
 >
